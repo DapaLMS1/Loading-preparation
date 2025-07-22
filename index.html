@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steriliser Check Learning Activity</title>
+    <!-- Tailwind CSS for utility classes and responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import Inter font for a clean, modern look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F2F2F2; /* Light grey background from brand colors */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 30px); /* Reduced height to lessen bottom padding */
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars during animations */
+        }
+
+        /* Main container for the entire activity */
+        .learning-activity-container {
+            position: relative;
+            width: 650px; /* Base width for desktop */
+            height: 650px; /* Base height for desktop (maintains aspect ratio) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #C3ACE8; /* Light purple from brand colors */
+            border-radius: 1.5rem; /* Rounded corners for the container */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25); /* More pronounced shadow */
+        }
+
+        /* Styling for the large central circle */
+        .large-circle {
+            width: 410px; /* Increased by 10px from 400px */
+            height: 380px; /* Reduced by 20px from 400px */
+            background-color: #FFFFFF; /* Changed to white background */
+            border-radius: 50%; /* Makes it a circle */
+            display: flex;
+            flex-direction: column; /* Use column to stack content vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center;
+            padding: 35px; /* Adjusted padding for more space */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            transition: all 0.5s ease-in-out; /* Smooth transitions for any size changes */
+            position: absolute; /* Allows centering within container */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Perfect centering */
+            color: #532A8C; /* Primary Purple text for contrast (readable on white) */
+            line-height: 1.6;
+            box-sizing: border-box; /* Include padding in width/height */
+        }
+
+        .large-circle-content {
+            width: 100%;
+            height: 100%; /* Ensure content takes full height to enable centering */
+            display: flex; /* Use flex to center the paragraph */
+            flex-direction: column; /* Stack vertically if more elements are added */
+            justify-content: center; /* Center content vertically within its container */
+            align-items: center; /* Center content horizontally within its container */
+            text-align: center; /* Apply text alignment here for overall content */
+        }
+
+        .large-circle-content p {
+            font-size: 1rem; /* Slightly reduced font size for large circle content */
+            font-weight: 400;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            margin: 0; /* Ensure no default paragraph margins interfere */
+        }
+
+        /* Wrapper for small circles, positioned to cover the main container */
+        #small-circles-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        /* Styling for individual small circles */
+        .small-circle {
+            position: absolute;
+            width: 80px; /* Base width */
+            height: 80px; /* Base height */
+            background-color: #532A8C; /* Primary Purple from brand colors */
+            color: #F2F2F2; /* Light grey text for contrast */
+            border-radius: 50%; /* Makes it a circle */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Soft shadow */
+            transition: transform 0.7s ease-in-out,
+                        width 0.3s ease-in-out, height 0.3s ease-in-out,
+                        border 0.3s ease-in-out, color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            font-size: 0.8rem; /* Slightly reduced font size for smaller circles */
+            font-weight: 600;
+            padding: 5px;
+            box-sizing: border-box; /* Include padding in width/height */
+            line-height: 1.2; /* Adjust line height for multi-line titles */
+        }
+
+        /* Styling for the active (clicked) small circle */
+        .small-circle.active {
+            width: 100px; /* Active size */
+            height: 100px; /* Active size */
+            border: 4px solid #7ABF49; /* Accent Green 1 border */
+            color: #F2F2F2; /* Light grey text for highlight */
+            background-color: #9D8ABB; /* Secondary Purple for active background */
+            z-index: 10; /* Ensures it's on top */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .learning-activity-container {
+                width: 90vw; /* Adjusted for smaller screens */
+                height: 90vw; /* Adjusted for smaller screens */
+            }
+
+            .large-circle {
+                width: 72vw; /* Adjusted for smaller screens, based on new desktop width */
+                height: 67vw; /* Adjusted for smaller screens, based on new desktop height */
+                padding: 20px; /* Adjusted padding for smaller screens */
+            }
+
+            .large-circle-content p {
+                font-size: 0.8rem; /* Adjusted for smaller screens */
+            }
+
+            .small-circle {
+                width: 15vw; /* Adjusted for smaller screens */
+                height: 15vw;
+                font-size: 0.65rem;
+                padding: 3px;
+            }
+
+            .small-circle.active {
+                width: 18vw; /* Adjusted for smaller screens */
+                height: 18vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="learning-activity-container">
+        <!-- Large central circle for displaying content -->
+        <div id="large-circle" class="large-circle">
+            <div class="large-circle-content">
+                <p id="large-circle-text">Select a topic to learn more about Steriliser Pre-Use Checks.</p>
+            </div>
+        </div>
+        <!-- Wrapper for small circles, where they will be dynamically added by JavaScript -->
+        <div id="small-circles-wrapper"></div>
+    </div>
+
+    <script>
+        // Data for each learning section, including ID, title, and detailed content.
+        const sectionsData = [
+            {
+                id: 'cleanliness-check',
+                title: 'Cleanliness Check',
+                content: 'Visually inspect the steriliser chamber, trays, and door seal. They must be clean and dry. Any debris, residue, or moisture can prevent steam penetration or affect the cycle. If you notice any build-up, clean it according to the manufacturer\'s instructions (e.g., end-of-day cleaning with mild detergent).'
+            },
+            {
+                id: 'water-levels',
+                title: 'Water Levels',
+                content: 'Check the steriliser\'s water reservoir level. Ensure it\'s adequate for the planned cycles. Use only the type of water specified by the manufacturer (e.g., distilled or deionised water) to prevent mineral build-up and damage to the machine.'
+            },
+            {
+                id: 'printer-accessories',
+                title: 'Printer Accessories',
+                content: 'If your autoclave has a printer, check the paper level and ink. You need a clear printout of each cycle for documentation.'
+            }
+        ];
+
+        // Get references to key DOM elements
+        const largeCircleText = document.getElementById('large-circle-text');
+        const smallCirclesWrapper = document.getElementById('small-circles-wrapper');
+        const learningActivityContainer = document.querySelector('.learning-activity-container');
+
+        // State variables to track the active circle and the index of the last clicked section
+        let activeCircleId = null; // ID of the currently active (clicked) circle
+        let lastClickedSectionIndex = -1; // Index of the last section clicked in sectionsData
+
+        // Base sizes for calculations (desktop reference)
+        const BASE_CONTAINER_WIDTH = 650;
+        const LARGE_CIRCLE_DIAMETER_PX = 410; // Updated large circle diameter (using the new width for calculation consistency)
+        const SMALL_CIRCLE_DIAMETER_PX = 80;
+        const ACTIVE_SMALL_CIRCLE_DIAMETER_PX = 100;
+        // Reduced padding from large circle for less whitespace
+        const PADDING_FROM_LARGE_CIRCLE = 40;
+
+        // Angle steps for distributing circles sequentially on the left and right arcs
+        // These values are tuned to provide good spacing and sequential movement.
+        const LEFT_SLOT_ANGLE_STEP_DEGREES = 25;
+        const RIGHT_SLOT_ANGLE_STEP_DEGREES = 25;
+
+        /**
+         * Calculates dynamic sizes based on the current width of the main container.
+         * This ensures responsiveness of the circle dimensions.
+         * @returns {object} An object containing scaled diameters and padding.
+         */
+        function getDynamicSizes() {
+            const containerWidth = learningActivityContainer.offsetWidth;
+            // Calculate ratios based on base desktop sizes
+            // Note: largeCircleRatio now uses the updated LARGE_CIRCLE_DIAMETER_PX (410)
+            const largeCircleRatio = LARGE_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH;
+            const smallCircleRatio = SMALL_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH;
+            const activeSmallCircleRatio = ACTIVE_SMALL_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH;
+            const paddingRatio = PADDING_FROM_LARGE_CIRCLE / BASE_CONTAINER_WIDTH;
+
+            return {
+                largeCircleDiameter: containerWidth * largeCircleRatio,
+                smallCircleDiameter: containerWidth * smallCircleRatio,
+                activeSmallCircleDiameter: containerWidth * activeSmallCircleRatio,
+                padding: containerWidth * paddingRatio
+            };
+        }
+
+        /**
+         * Calculates the radius of the orbit for the small circles around the large circle.
+         * @returns {number} The orbit radius in pixels.
+         */
+        function getOrbitRadius() {
+            const sizes = getDynamicSizes();
+            // Orbit radius is half of large circle + half of small circle + padding
+            return (sizes.largeCircleDiameter / 2) + (sizes.smallCircleDiameter / 2) + sizes.padding;
+        }
+
+        /**
+         * Converts degrees to radians for trigonometric calculations.
+         * @param {number} degrees - Angle in degrees.
+         * @returns {number} Angle in radians.
+         */
+        function degToRad(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        /**
+         * Renders and updates the positions and states of all small circles.
+         * This function is called whenever a circle is clicked or the window is resized.
+         */
+        function renderCircles() {
+            const orbitRadius = getOrbitRadius();
+            const sizes = getDynamicSizes();
+            // Calculate the center of the learning activity container
+            const containerCenterX = learningActivityContainer.offsetWidth / 2;
+            const containerCenterY = learningActivityContainer.offsetHeight / 2;
+
+            // Define starting angles for the arcs
+            // These angles define the "top" position for the first circle on each side.
+            const rightArcTopAngleDegrees = 60; // Top-right position
+            const leftArcTopAngleDegrees = 120; // Top-left position
+
+            // Find the index of the currently active section in the original data array
+            const activeSectionIndex = sectionsData.findIndex(s => s.id === activeCircleId);
+
+            sectionsData.forEach((section, index) => {
+                const circleElement = document.getElementById(`circle-${section.id}`);
+                if (!circleElement) return; // Ensure the element exists
+
+                let targetAngleDegrees;
+                let currentCircleDiameter = sizes.smallCircleDiameter;
+
+                // Determine if the current circle is the active one
+                if (section.id === activeCircleId) {
+                    currentCircleDiameter = sizes.activeSmallCircleDiameter;
+                    circleElement.classList.add('active');
+                } else {
+                    circleElement.classList.remove('active');
+                }
+
+                // Logic to position circles:
+                // Circles with an index less than or equal to the activeSectionIndex
+                // belong on the left side, in their original sequential order.
+                if (index <= activeSectionIndex) {
+                    // Position on the left arc, sequentially downwards from the top-left angle
+                    targetAngleDegrees = leftArcTopAngleDegrees + (index * LEFT_SLOT_ANGLE_STEP_DEGREES);
+                } else {
+                    // Circles with an index greater than the activeSectionIndex
+                    // belong on the right side, in their original sequential order.
+                    // The 'relativeIndexOnRight' calculates their position within the right-side group.
+                    const relativeIndexOnRight = index - (activeSectionIndex + 1);
+                    // Position on the right arc, sequentially downwards from the top-right angle
+                    targetAngleDegrees = rightArcTopAngleDegrees - (relativeIndexOnRight * RIGHT_SLOT_ANGLE_STEP_DEGREES);
+                }
+
+                const targetAngleRadians = degToRad(targetAngleDegrees);
+
+                // Calculate X and Y positions based on the calculated angle and orbit radius
+                // Subtract half of the circle's diameter to center it on the calculated point.
+                const x = containerCenterX + orbitRadius * Math.cos(targetAngleRadians) - (currentCircleDiameter / 2);
+                const y = containerCenterY - orbitRadius * Math.sin(targetAngleRadians) - (currentCircleDiameter / 2);
+
+                // Apply the calculated position and dimensions to the circle element
+                circleElement.style.transform = `translate(${x}px, ${y}px)`;
+                circleElement.style.width = `${currentCircleDiameter}px`;
+                circleElement.style.height = `${currentCircleDiameter}px`;
+            });
+        }
+
+        /**
+         * Handles the click event on a small circle.
+         * Manages the state transitions (active, completed) and updates content.
+         * @param {Event} event - The click event object.
+         */
+        function handleCircleClick(event) {
+            const clickedCircle = event.currentTarget;
+            const clickedId = clickedCircle.dataset.id; // Get the ID from the data-id attribute
+
+            // If the same circle is clicked again, do nothing
+            if (activeCircleId === clickedId) {
+                return;
+            }
+
+            // Update the index of the last clicked section. This drives the positioning logic.
+            lastClickedSectionIndex = sectionsData.findIndex(s => s.id === clickedId);
+            // Set the newly clicked circle as the active one
+            activeCircleId = clickedId;
+
+            // Update the content of the large central circle with the selected section's data
+            const selectedSection = sectionsData.find(s => s.id === clickedId);
+            if (selectedSection) {
+                largeCircleText.textContent = selectedSection.content;
+            }
+
+            // Re-render all circles to update their positions and visual states based on the new state
+            renderCircles();
+        }
+
+        /**
+         * Initializes the learning activity:
+         * - Creates the small circle DOM elements.
+         * - Attaches event listeners.
+         * - Performs the initial rendering of circle positions.
+         * - Sets up a resize listener for responsiveness.
+         */
+        function init() {
+            // Dynamically create and append small circle elements to the wrapper
+            sectionsData.forEach(section => {
+                const circleDiv = document.createElement('div');
+                circleDiv.classList.add('small-circle');
+                circleDiv.id = `circle-${section.id}`; // Assign a unique ID (e.g., 'circle-cleanliness-check')
+                circleDiv.dataset.id = section.id; // Store the section ID (e.g., 'cleanliness-check')
+                circleDiv.textContent = section.title; // Display the section title (e.g., 'Cleanliness Check')
+
+                // Add a click event listener to each small circle
+                circleDiv.addEventListener('click', handleCircleClick);
+                smallCirclesWrapper.appendChild(circleDiv); // Add the circle to the DOM
+            });
+
+            // Perform the initial layout of circles when the page loads
+            renderCircles();
+
+            // Add an event listener to re-render circles when the window is resized.
+            // This ensures the layout remains responsive and circles adjust their positions.
+            window.addEventListener('resize', renderCircles);
+        }
+
+        // Call the initialization function once the DOM is fully loaded to set up the activity
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
