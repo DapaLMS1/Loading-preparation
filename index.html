@@ -34,10 +34,10 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25); /* More pronounced shadow */
         }
 
-        /* Styling for the large central circle */
+        /* Styling for the large central circle (ADJUSTED SIZE FOR CONTAINMENT AND CIRCULAR SHAPE) */
         .large-circle {
-            width: 410px; /* Increased by 10px from 400px */
-            height: 380px; /* Reduced by 20px from 400px */
+            width: 440px; /* Ensuring perfect circle */
+            height: 440px; /* ENSURING PERFECT CIRCLE (was 420px) */
             background-color: #FFFFFF; /* Changed to white background */
             border-radius: 50%; /* Makes it a circle */
             display: flex;
@@ -83,11 +83,11 @@
             left: 0;
         }
 
-        /* Styling for individual small circles */
+        /* Styling for individual small circles (INCREASED SHADOW) */
         .small-circle {
             position: absolute;
-            width: 80px; /* Base width */
-            height: 80px; /* Base height */
+            width: 100px; 
+            height: 100px;
             background-color: #532A8C; /* Primary Purple from brand colors */
             color: #F2F2F2; /* Light grey text for contrast */
             border-radius: 50%; /* Makes it a circle */
@@ -96,7 +96,8 @@
             align-items: center;
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Soft shadow */
+            /* UPDATED: Increased shadow for more lift */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
             transition: transform 0.7s ease-in-out,
                         width 0.3s ease-in-out, height 0.3s ease-in-out,
                         border 0.3s ease-in-out, color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -107,15 +108,16 @@
             line-height: 1.2; /* Adjust line height for multi-line titles */
         }
 
-        /* Styling for the active (clicked) small circle */
+        /* Styling for the active (clicked) small circle (INCREASED SHADOW) */
         .small-circle.active {
-            width: 100px; /* Active size */
-            height: 100px; /* Active size */
+            width: 120px; 
+            height: 120px; 
             border: 4px solid #7ABF49; /* Accent Green 1 border */
             color: #F2F2F2; /* Light grey text for highlight */
             background-color: #9D8ABB; /* Secondary Purple for active background */
             z-index: 10; /* Ensures it's on top */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* More pronounced shadow */
+            /* UPDATED: Much stronger shadow for a "popping out" effect */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); 
         }
 
         /* Responsive adjustments for smaller screens */
@@ -126,8 +128,8 @@
             }
 
             .large-circle {
-                width: 72vw; /* Adjusted for smaller screens, based on new desktop width */
-                height: 67vw; /* Adjusted for smaller screens, based on new desktop height */
+                width: 68vw; /* Adjusted for new desktop width ratio */
+                height: 68vw; /* Adjusted to match width for perfect circle */
                 padding: 20px; /* Adjusted padding for smaller screens */
             }
 
@@ -136,15 +138,15 @@
             }
 
             .small-circle {
-                width: 15vw; /* Adjusted for smaller screens */
-                height: 15vw;
+                width: 18vw; /* Adjusted for new base size */
+                height: 18vw;
                 font-size: 0.65rem;
                 padding: 3px;
             }
 
             .small-circle.active {
-                width: 18vw; /* Adjusted for smaller screens */
-                height: 18vw;
+                width: 21vw; /* Adjusted for new active size */
+                height: 21vw;
             }
         }
     </style>
@@ -192,11 +194,12 @@
 
         // Base sizes for calculations (desktop reference)
         const BASE_CONTAINER_WIDTH = 650;
-        const LARGE_CIRCLE_DIAMETER_PX = 410; // Updated large circle diameter (using the new width for calculation consistency)
-        const SMALL_CIRCLE_DIAMETER_PX = 80;
-        const ACTIVE_SMALL_CIRCLE_DIAMETER_PX = 100;
-        // Reduced padding from large circle for less whitespace
-        const PADDING_FROM_LARGE_CIRCLE = 40;
+        // The diameter of the large circle is now set to 440px for a perfect circle and containment.
+        const LARGE_CIRCLE_DIAMETER_PX = 440; 
+        const SMALL_CIRCLE_DIAMETER_PX = 100;
+        const ACTIVE_SMALL_CIRCLE_DIAMETER_PX = 120;
+        // Padding reduced to 5px to fit the orbit within the 650px container
+        const PADDING_FROM_LARGE_CIRCLE = 5; 
 
         // Angle steps for distributing circles sequentially on the left and right arcs
         // These values are tuned to provide good spacing and sequential movement.
@@ -211,8 +214,8 @@
         function getDynamicSizes() {
             const containerWidth = learningActivityContainer.offsetWidth;
             // Calculate ratios based on base desktop sizes
-            // Note: largeCircleRatio now uses the updated LARGE_CIRCLE_DIAMETER_PX (410)
-            const largeCircleRatio = LARGE_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH;
+            // We use the same ratio for height and width here since they are now equal (440/650)
+            const largeCircleRatio = LARGE_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH; 
             const smallCircleRatio = SMALL_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH;
             const activeSmallCircleRatio = ACTIVE_SMALL_CIRCLE_DIAMETER_PX / BASE_CONTAINER_WIDTH;
             const paddingRatio = PADDING_FROM_LARGE_CIRCLE / BASE_CONTAINER_WIDTH;
@@ -232,6 +235,9 @@
         function getOrbitRadius() {
             const sizes = getDynamicSizes();
             // Orbit radius is half of large circle + half of small circle + padding
+            // Calculation check: 440/2 + 100/2 + 5 = 220 + 50 + 5 = 275px
+            // Container center to edge: 650/2 = 325px
+            // Orbit radius (275) + Small Circle Radius (50) = 325px (Perfect fit!)
             return (sizes.largeCircleDiameter / 2) + (sizes.smallCircleDiameter / 2) + sizes.padding;
         }
 
